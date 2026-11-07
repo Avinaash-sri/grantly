@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #FAF8F5;
+    --bg-secondary: #F3EFE7;
+    --bg-surface: #FFFFFF;
+    --bg-muted: #EBE5D9;
+    --border-subtle: #E5E0D4;
+    --border-strong: #D1C9BC;
+    --text-primary: #12161A;
+    --text-secondary: #4A5562;
+    --text-muted: #7E8B99;
+    --accent-blue: #2C4E6F;
+    --accent-blue-light: #EBF1F7;
+    --accent-gold: #C5A880;
+    --accent-gold-soft: #F9F5EE;
+    --badge-bg: #EAE6DC;
+  }
+
+  .dark {
+    --bg-primary: #0F1216;
+    --bg-secondary: #161B22;
+    --bg-surface: #1B2129;
+    --bg-muted: #242C37;
+    --border-subtle: #2A3340;
+    --border-strong: #384556;
+    --text-primary: #F7F5F0;
+    --text-secondary: #B6C0CC;
+    --text-muted: #7A8796;
+    --accent-blue: #5C88B5;
+    --accent-blue-light: #1A2633;
+    --accent-gold: #E0C8A4;
+    --accent-gold-soft: #252018;
+    --badge-bg: #222933;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+  }
+}
+
+/* Custom font utility classes */
+.font-serif {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+}
+
+.font-sans {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Editorial hairline border */
+.border-hairline {
+  border-width: 1px;
+  border-color: var(--border-subtle);
+}
+
+.border-hairline-b {
+  border-bottom-width: 1px;
+  border-bottom-color: var(--border-subtle);
+}
+
+.border-hairline-t {
+  border-top-width: 1px;
+  border-top-color: var(--border-subtle);
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Editorial paper texture effect (pure CSS subtle noise) */
+.paper-glow {
+  box-shadow: 0 1px 3px rgba(18, 22, 26, 0.04), 0 8px 24px -4px rgba(18, 22, 26, 0.03);
+}
+
+.paper-glow-hover:hover {
+  box-shadow: 0 4px 12px rgba(18, 22, 26, 0.06), 0 16px 32px -6px rgba(18, 22, 26, 0.05);
+}
+
+/* Suppress default OS hardware cursor so only the custom styled dot & ring are visible */
+@media (hover: hover) and (pointer: fine) {
+  html, body, *, *::before, *::after {
+    cursor: none !important;
+  }
+}

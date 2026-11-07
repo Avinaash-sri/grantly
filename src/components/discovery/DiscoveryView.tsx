@@ -16,12 +16,12 @@ const ScholarshipCard3D = React.lazy(() => import('../3d/ScholarshipCard3D'));
 
 // Helper hook: enable 3D tilt cards on desktop with no reduced-motion preference
 function useEnable3D() {
-  const [enabled, setEnabled] = React.useState(false);
-  React.useEffect(() => {
+  const [enabled] = useState(() => {
+    if (typeof window === 'undefined') return false;
     const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setEnabled(!isTouch && !prefersReduced);
-  }, []);
+    return !isTouch && !prefersReduced;
+  });
   return enabled;
 }
 

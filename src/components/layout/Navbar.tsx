@@ -11,7 +11,8 @@ import {
   Moon, 
   Menu, 
   X,
-  FileText
+  FileText,
+  Globe
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -29,6 +30,7 @@ export const Navbar: React.FC = () => {
   const navItems: { id: ActiveView; label: string; icon: React.ReactNode; tag?: string }[] = [
     { id: 'landing', label: 'Overview', icon: <FileText className="w-4 h-4" /> },
     { id: 'discovery', label: 'Scholarships', icon: <Compass className="w-4 h-4" /> },
+    { id: 'universe', label: '3D Universe', icon: <Globe className="w-4 h-4" />, tag: '3D' },
     { id: 'wizard', label: 'Eligibility Engine', icon: <Sparkles className="w-4 h-4" />, tag: 'Match' },
     { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
     { id: 'applications', label: 'Applications', icon: <FolderKanban className="w-4 h-4" /> }

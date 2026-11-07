@@ -444,3 +444,6 @@ export const HeroScene3D: React.FC = () => {
   );
 };
 
+export default HeroScene3D;
+
+

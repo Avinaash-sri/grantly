@@ -2,9 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { useApp } from '../../context/AppContext';
 import { ArrowRight, Sparkles, Shield, Award, Landmark } from 'lucide-react';
 
-const AcademicCanvas = lazy(() =>
-  import('../3d/AcademicCanvas').then((mod) => ({ default: mod.AcademicCanvas }))
-);
+const HeroScene3D = lazy(() => import('../3d/HeroScene3D'));
 
 export const HeroSection: React.FC = () => {
   const { setCurrentView } = useApp();
@@ -92,17 +90,17 @@ export const HeroSection: React.FC = () => {
               fallback={
                 <div className="w-full h-full flex items-center justify-center bg-[#F3EFE7]/40 dark:bg-[#161B22]/40 rounded border border-[#E5E0D4] dark:border-[#2A3340]">
                   <div className="text-center font-mono text-xs text-[#7E8B99] animate-pulse">
-                    RENDERING 3D ACADEMIC FOLIO...
+                    RENDERING 3D ACADEMIC ENVIRONMENT...
                   </div>
                 </div>
               }
             >
-              <AcademicCanvas />
+              <HeroScene3D />
             </Suspense>
 
             {/* Interactive hint overlay */}
             <div className="absolute bottom-2 right-4 pointer-events-none text-[10px] font-mono tracking-widest uppercase text-[#7E8B99] dark:text-[#7A8796] bg-[#FAF8F5]/80 dark:bg-[#0F1216]/80 px-2.5 py-1 rounded border border-[#E5E0D4] dark:border-[#2A3340]">
-              Interactive 3D Folio • Move Mouse
+              Interactive 3D Architectural Scene • Move Mouse &amp; Scroll
             </div>
           </div>
 

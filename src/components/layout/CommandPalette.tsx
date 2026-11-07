@@ -9,7 +9,8 @@ import {
   Sun, 
   Moon, 
   ArrowRight,
-  GraduationCap
+  GraduationCap,
+  Globe
 } from 'lucide-react';
 
 export const CommandPalette: React.FC = () => {
@@ -61,6 +62,13 @@ export const CommandPalette: React.FC = () => {
       category: 'Navigation',
       icon: <Compass className="w-4 h-4 text-[#2C4E6F] dark:text-[#5C88B5]" />,
       action: () => setCurrentView('discovery')
+    },
+    {
+      id: 'nav-univ',
+      label: 'Explore 3D Opportunity Universe',
+      category: '3D Experience',
+      icon: <Globe className="w-4 h-4 text-[#C5A880]" />,
+      action: () => setCurrentView('universe')
     },
     {
       id: 'nav-wiz',

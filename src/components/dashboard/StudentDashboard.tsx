@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { useApp } from '../../context/AppContext';
 import { PortfolioChart } from './PortfolioChart';
+const VaultVisualization3D = lazy(() => import('../3d/VaultVisualization3D'));
 import { 
   User, 
   Clock, 
@@ -141,6 +142,22 @@ export const StudentDashboard: React.FC = () => {
               Pinned grants for future cycles
             </p>
           </div>
+        </div>
+
+        {/* 3D Endowment Capital Vault */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#C5A880]">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>3D CAPITAL PILLARS</span>
+            </div>
+            <span className="text-xs font-mono text-[#7E8B99] hidden sm:inline">
+              Interactive 3D Vault • Hover Pillars to Inspect Capital Allocations
+            </span>
+          </div>
+          <Suspense fallback={<div className="h-[280px] flex items-center justify-center bg-[#F3EFE7] dark:bg-[#161B22] rounded border border-[#E5E0D4] dark:border-[#2A3340] font-mono text-xs text-[#7E8B99]">INITIALIZING CAPITAL VAULT...</div>}>
+            <VaultVisualization3D applications={applications} scholarships={scholarships} />
+          </Suspense>
         </div>
 
         {/* Charts & Deadlines Section */}

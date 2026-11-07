@@ -17,6 +17,7 @@ import { ScholarStories } from './components/landing/ScholarStories';
 
 // Core Application Views
 import { DiscoveryView } from './components/discovery/DiscoveryView';
+import { UniverseView } from './components/universe/UniverseView';
 import { EligibilityWizard } from './components/wizard/EligibilityWizard';
 import { StudentDashboard } from './components/dashboard/StudentDashboard';
 import { ApplicationTracker } from './components/applications/ApplicationTracker';
@@ -78,6 +79,8 @@ export function App() {
         )}
 
         {currentView === 'discovery' && <DiscoveryView />}
+
+        {currentView === 'universe' && <UniverseView />}
 
         {currentView === 'wizard' && <EligibilityWizard />}
 

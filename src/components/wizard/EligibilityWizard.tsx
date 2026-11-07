@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useApp } from '../../context/AppContext';
 import { StudentProfile, DegreeLevel, EligibilityResult } from '../../types';
+const EligibilityCore3D = React.lazy(() => import('../3d/EligibilityCore3D'));
+
 import { 
   Sparkles, 
   CheckCircle2, 
@@ -141,19 +143,41 @@ export const EligibilityWizard: React.FC = () => {
     <div className="min-h-screen py-10 bg-[#FAF8F5] dark:bg-[#0F1216] transition-colors">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
-        {/* Masthead Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#EBE5D9] dark:bg-[#242C37] rounded text-xs font-mono uppercase tracking-wider text-[#2C4E6F] dark:text-[#5C88B5]">
-            <Sparkles className="w-3.5 h-3.5 text-[#C5A880]" />
-            <span>DETERMINISTIC EVALUATION ENGINE V2.4</span>
+        {/* Masthead Header with 3D Evaluator Prism */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#F3EFE7] dark:bg-[#161B22] border border-[#E5E0D4] dark:border-[#2A3340] rounded-sm p-6 sm:p-8 paper-glow">
+          <div className="lg:col-span-7 space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#EBE5D9] dark:bg-[#242C37] rounded text-xs font-mono uppercase tracking-wider text-[#2C4E6F] dark:text-[#5C88B5]">
+              <Sparkles className="w-3.5 h-3.5 text-[#C5A880]" />
+              <span>DETERMINISTIC EVALUATION ENGINE V2.4</span>
+            </div>
+            <h1 className="font-serif text-3xl sm:text-4xl text-[#12161A] dark:text-[#F7F5F0]">
+              Calculate Your Eligibility Index.
+            </h1>
+            <p className="text-sm text-[#4A5562] dark:text-[#B6C0CC] leading-relaxed">
+              Evaluate your academic profile against strict institutional endowment constraints.
+              Zero speculative approximations — only transparent deterministic criteria verification.
+            </p>
+            <div className="pt-2 flex items-center gap-4 text-xs font-mono text-[#7E8B99] dark:text-[#7A8796]">
+              <span>Current GPA: <strong className="text-[#2C4E6F] dark:text-[#5C88B5]">{profileForm.gpa.toFixed(2)}</strong></span>
+              <span>•</span>
+              <span>Degree: <strong className="text-[#12161A] dark:text-[#F7F5F0]">{profileForm.targetDegree}</strong></span>
+              <span>•</span>
+              <span className="text-[#C5A880]">Live 3D Telemetry</span>
+            </div>
           </div>
-          <h1 className="font-serif text-3xl sm:text-5xl text-[#12161A] dark:text-[#F7F5F0]">
-            Calculate Your Eligibility Index.
-          </h1>
-          <p className="text-sm text-[#4A5562] dark:text-[#B6C0CC]">
-            Evaluate your academic profile against strict endowment constraints. 
-            No vague AI approximations — only transparent deterministic criteria matching.
-          </p>
+
+          <div className="lg:col-span-5 h-[220px] sm:h-[250px] relative w-full flex items-center justify-center">
+            <Suspense fallback={<div className="font-mono text-xs text-[#7E8B99] animate-pulse">CALIBRATING 3D PRISM...</div>}>
+              <EligibilityCore3D
+                gpa={profileForm.gpa}
+                matchScore={results.length > 0 ? results[0].matchScore : undefined}
+                isEvaluated={hasEvaluated}
+              />
+            </Suspense>
+            <div className="absolute bottom-1 right-2 pointer-events-none text-[9px] font-mono uppercase text-[#7E8B99] dark:text-[#7A8796]">
+              {hasEvaluated ? 'Prism Synthesized' : 'Prism Active'}
+            </div>
+          </div>
         </div>
 
         {/* Wizard Form Container */}

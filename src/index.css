@@ -1,7 +1,15 @@
 @import "tailwindcss";
 
+/* =====================================================
+   GRANTLY — EDITORIAL DESIGN TOKEN SYSTEM
+   Tailwind CSS v4 custom variant for class-based dark mode
+   ===================================================== */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
+    /* Warm Ivory Editorial Palette (Light Mode) */
     --bg-primary: #FAF8F5;
     --bg-secondary: #F3EFE7;
     --bg-surface: #FFFFFF;
@@ -13,12 +21,15 @@
     --text-muted: #7E8B99;
     --accent-blue: #2C4E6F;
     --accent-blue-light: #EBF1F7;
+    --accent-blue-mid: #5C88B5;
     --accent-gold: #C5A880;
     --accent-gold-soft: #F9F5EE;
     --badge-bg: #EAE6DC;
+    --card-shadow: 0 1px 3px rgba(18, 22, 26, 0.04), 0 8px 24px -4px rgba(18, 22, 26, 0.03);
   }
 
-  .dark {
+  .dark, [data-theme="dark"] {
+    /* Midnight Ink Academic Palette (Dark Mode) */
     --bg-primary: #0F1216;
     --bg-secondary: #161B22;
     --bg-surface: #1B2129;
@@ -30,24 +41,29 @@
     --text-muted: #7A8796;
     --accent-blue: #5C88B5;
     --accent-blue-light: #1A2633;
+    --accent-blue-mid: #2C4E6F;
     --accent-gold: #E0C8A4;
     --accent-gold-soft: #252018;
     --badge-bg: #222933;
+    --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.4), 0 12px 32px -4px rgba(0, 0, 0, 0.35);
   }
 
   html {
     scroll-behavior: smooth;
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color-scheme: light dark;
   }
 
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 }
 
-/* Custom font utility classes */
+/* =====================================================
+   EDITORIAL TYPOGRAPHY
+   ===================================================== */
 .font-serif {
   font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
 }
@@ -57,10 +73,12 @@
 }
 
 .font-mono {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
 }
 
-/* Editorial hairline border */
+/* =====================================================
+   EDITORIAL HAIRLINE BORDERS
+   ===================================================== */
 .border-hairline {
   border-width: 1px;
   border-color: var(--border-subtle);
@@ -76,37 +94,91 @@
   border-top-color: var(--border-subtle);
 }
 
-/* Custom luxury scrollbar */
+/* =====================================================
+   LUXURY MINIMALIST SCROLLBAR
+   ===================================================== */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
   border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
 
-/* Editorial paper texture effect (pure CSS subtle noise) */
+/* =====================================================
+   PAPER TEXTURE & ELEVATION GLOW
+   ===================================================== */
 .paper-glow {
-  box-shadow: 0 1px 3px rgba(18, 22, 26, 0.04), 0 8px 24px -4px rgba(18, 22, 26, 0.03);
+  box-shadow: var(--card-shadow);
 }
 
 .paper-glow-hover:hover {
-  box-shadow: 0 4px 12px rgba(18, 22, 26, 0.06), 0 16px 32px -6px rgba(18, 22, 26, 0.05);
+  box-shadow: 0 6px 20px rgba(18, 22, 26, 0.08), 0 20px 40px -8px rgba(18, 22, 26, 0.06);
+}
+.dark .paper-glow-hover:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 20px 40px -8px rgba(0, 0, 0, 0.45);
 }
 
-/* Suppress default OS hardware cursor so only the custom styled dot & ring are visible */
+/* =====================================================
+   CUSTOM CURSOR
+   Hide default OS cursor on fine pointers, custom cursor takes over
+   ===================================================== */
 @media (hover: hover) and (pointer: fine) {
   html, body, *, *::before, *::after {
     cursor: none !important;
   }
+  button, a, [role="button"], input, select, textarea, label {
+    cursor: none !important;
+  }
+}
+
+/* =====================================================
+   GLOBAL SMOOTH THEME TRANSITION
+   ===================================================== */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Exclude Three.js canvases, animations & cursors from general theme transitions */
+canvas,
+canvas *,
+.no-theme-transition,
+[data-cursor-element] {
+  transition: none !important;
+}
+
+/* =====================================================
+   CUSTOM ENTRANCE ANIMATIONS
+   ===================================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease forwards;
 }

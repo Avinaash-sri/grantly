@@ -155,3 +155,6 @@ export const VaultVisualization3D: React.FC<VaultVisualization3DProps> = ({
   );
 };
 
+export default VaultVisualization3D;
+
+

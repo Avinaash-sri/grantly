@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useApp } from '../../context/AppContext';
 
 export const CustomCursor: React.FC = () => {
+  const { theme } = useApp();
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState(false);
   const [isText, setIsText] = useState(false);
@@ -27,9 +29,9 @@ export const CustomCursor: React.FC = () => {
       }
 
       // Check text input
-      const isInput = 
-        target.tagName === 'INPUT' || 
-        target.tagName === 'TEXTAREA' || 
+      const isInput =
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
         target.isContentEditable;
       setIsText(isInput);
 
@@ -42,7 +44,7 @@ export const CustomCursor: React.FC = () => {
         Boolean(target.closest('a')) ||
         target.getAttribute('role') === 'button' ||
         target.classList.contains('cursor-pointer');
-      
+
       setIsHovered(isClickable);
     };
 
@@ -62,38 +64,49 @@ export const CustomCursor: React.FC = () => {
 
   if (isTouchDevice || !hasMoved) return null;
 
+  const isDark = theme === 'dark';
+
   return (
-    <div 
+    <div
       className="pointer-events-none fixed inset-0 z-[999999] overflow-hidden select-none"
       style={{ pointerEvents: 'none' }}
+      data-cursor-element="true"
     >
       {/* Outer Fluid Magnetic Ring */}
       <div
         className="fixed top-0 left-0 rounded-full border pointer-events-none transition-transform duration-150 ease-out will-change-transform"
+        data-cursor-element="true"
         style={{
-          width: isText ? '4px' : '36px',
-          height: isText ? '24px' : '36px',
+          width: isText ? '4px' : '38px',
+          height: isText ? '24px' : '38px',
           borderRadius: isText ? '2px' : '9999px',
-          transform: `translate3d(${isText ? pos.x - 2 : pos.x - 18}px, ${isText ? pos.y - 12 : pos.y - 18}px, 0) scale(${
+          transform: `translate3d(${isText ? pos.x - 2 : pos.x - 19}px, ${isText ? pos.y - 12 : pos.y - 19}px, 0) scale(${
             isMouseDown ? 0.85 : isHovered ? 1.45 : 1
           })`,
-          borderColor: isHovered 
-            ? 'rgba(197, 168, 128, 0.9)' 
-            : 'rgba(44, 78, 111, 0.55)',
-          backgroundColor: isHovered 
-            ? 'rgba(197, 168, 128, 0.12)' 
-            : 'rgba(44, 78, 111, 0.04)',
-          boxShadow: '0 0 12px rgba(0, 0, 0, 0.15)'
+          borderColor: isHovered
+            ? (isDark ? 'rgba(224, 200, 164, 0.95)' : 'rgba(197, 168, 128, 0.95)')
+            : (isDark ? 'rgba(92, 136, 181, 0.75)' : 'rgba(44, 78, 111, 0.6)'),
+          backgroundColor: isHovered
+            ? (isDark ? 'rgba(224, 200, 164, 0.18)' : 'rgba(197, 168, 128, 0.12)')
+            : (isDark ? 'rgba(92, 136, 181, 0.08)' : 'rgba(44, 78, 111, 0.05)'),
+          boxShadow: isDark
+            ? '0 0 16px rgba(0, 0, 0, 0.6)'
+            : '0 0 12px rgba(0, 0, 0, 0.15)'
         }}
       />
 
-      {/* Central Sharp Precision Dot */}
+      {/* Central Sharp Precision Dot — Always High Contrast */}
       <div
-        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full pointer-events-none transition-transform duration-75 will-change-transform shadow-sm"
+        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full pointer-events-none transition-transform duration-75 will-change-transform"
+        data-cursor-element="true"
         style={{
           transform: `translate3d(${pos.x - 5}px, ${pos.y - 5}px, 0) scale(${isMouseDown ? 0.75 : 1})`,
-          backgroundColor: isHovered ? '#C5A880' : '#12161A',
-          boxShadow: '0 0 0 1.5px rgba(255, 255, 255, 0.85), 0 1px 4px rgba(0, 0, 0, 0.35)'
+          backgroundColor: isHovered
+            ? (isDark ? '#E0C8A4' : '#C5A880')
+            : (isDark ? '#F7F5F0' : '#12161A'),
+          boxShadow: isDark
+            ? '0 0 0 1.5px rgba(15, 18, 22, 0.95), 0 0 8px rgba(224, 200, 164, 0.5)'
+            : '0 0 0 1.5px rgba(255, 255, 255, 0.95), 0 1px 4px rgba(0, 0, 0, 0.35)'
         }}
       />
     </div>
